@@ -191,7 +191,7 @@
         let word = words[i]
         // console.log(word, 'am word') 
         const indexOfWord = forbidden.indexOf(word)
-        if(indexOfWord !== -1 ) {
+        if (indexOfWord !== -1) {
           let scrubbedWord = 'x'.repeat(word.length);
           forbiddenWords.push(scrubbedWord);
         } else {
@@ -202,7 +202,7 @@
     }
 
     // 👉 CHALLENGE 5
-    function normalizePhoneNumber(str) {
+    function normalizePhoneNumber(number) {
       // 🧠 normalizePhoneNumber takes a string as its only argument, representing a ten-digit number
       // The function returns a string formatted as seen below
       // 🧠 Examples of usage:
@@ -214,14 +214,42 @@
       // 🌟 HINT: instead of looping over the number's digits, loop backwards over a template "(XXX) XXX-XXXX"
       // 🌟 HINT: at each iteration, if the current character is an "X", replace it with the result of popping a digit from the number
       // 🌟 HINT: if you'd rather loop forwards, use `shift` instead of `pop`
-      if (str < 10) {
-        return "type a 10-digit number"
+
+
+      // Template for the normalized phone number
+
+
+
+      const template = "(XXX) XXX-XXXX";
+      let result = '';
+
+      if (typeof number !== 'string' || number.length !== 10) {
+        return "type a 10-digit number";
       }
-      if (typeof (str) !== 'number' || str < 0 || str > 9 ) {
-        return "invalid phone number"
+
+
+
+      //loops throught the input
+      for (let i = 0; i < number.length; i++) {
+        // If any input is not a valid digit, return "invalid phone number"
+        if (number[i] < '0' || number[i] > '9') {
+          return "invalid phone number";
+        }
       }
-      const digits = str.split('') 
-      
+
+      for (let i = template.length - 1; i >= 0; i--) {
+        console.log(i, 'am i')
+        const currentChar = template[i];
+        if (currentChar === 'X') {
+          const digit = number.slice(-1); // Gets the last digit from the number
+          result = digit + result;
+          number = number.slice(0, -1); // Removes the last digit from the number
+        } else {
+          result = currentChar + result;
+        }
+      }
+
+      return result;
     }
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
@@ -232,6 +260,22 @@
       // 🌟 HINT: research using `Math.random` to obtain a number from 1 to 6
       // 🌟 HINT: use `while(true)` to throw the dice indefinitely, but avoid an infinite loop by making sure to break out eventually
       // 🌟 HINT: you need to keep track of the total number of throws, as well as how many sixes in a row
+      let throws = 0; // keeps track of the throws
+      let consecSixes = 0; // keeps track of all the consec 6's
+
+      while(true) {
+        throws ++; // increases the number of throws
+        const throwResults = (Math.random() * 6) + 1; // rolls the dice
+      }
+      if (throwResults === 6 ) {
+        consecSixes ++;
+      } else {
+        consecSixes = 0
+      }
+      // if 3 consec sixes are rolled return the amount of throws it took
+      if (consecSixes === 3) {
+        return throws;
+      }
     }
 
     // 🧪 TESTS, do not make any changes below this line ===================
